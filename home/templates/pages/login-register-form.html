@@ -1,0 +1,55 @@
+{% extends 'pages/page.html' %}
+{% block content %}
+  
+  {% if page == 'login' %}
+  
+  <div>
+      <form action="" method="post">
+         {% csrf_token %}
+          <label for="">Username</label>
+          <input type="text"  placeholder="enterusername" name="username">
+ 
+          <label for="">Password</label>
+          <input type="password"  name="password">
+
+        <input type="submit" value="dang nhap">
+      </form> 
+      <label for="">Ban chua co tai khoan</label>
+      <a href="{% url 'home:register_user' %}">Dang ky</a>
+  </div>  
+
+  
+         {% if messages %}
+          <ul class="messages">
+               {% for message in messages  %}
+                   <li>{{message}}</li>
+               {% endfor %}
+          </ul>
+       
+         {% endif %}
+
+      {% else %}      
+  <form action="" method="POST">
+    {% csrf_token %}
+      Ten Dang Nhap 
+      {{form.username}}
+      <br>
+      Mat Khau
+      {{form.password1}}
+      <br>
+      Nhap lai mat Khau
+      {{form.password2}}
+      <br>
+      Mhap email
+      {{form.email}}
+      <br>
+    <input type="submit" value="submit">
+
+    </form>
+    {{form.errors}}
+
+    <label for="">Ban da co tai khoan</label>
+    <a href="{% url 'home:login_form' %}">Dang nhap</a>
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% extends 'pages/page.html' %}
+{% block content %} 
+<div>
+     <div class="container-fluid">
+
+
+      <nav class="navbar navbar-expand-sm justify-content-center">
+         <ul class="navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" href="{% url 'home:create_room' %}">Create Room</a>               
+            </li> 
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home:register_user' %}">Creat user</a>
+            </li>
+           
+           {% if  request.user.is_authenticated %}
+             <div>{{ user.username }}  </div>
+             <li class="nav-item">       
+               <a class="nav-link" href="{% url 'home:logout' %}">Logout</a>
+             </li>
+             {% else %}
+             <li class="nav-item">
+               <a class="nav-link" href="{% url 'home:login_form' %}">Login</a>
+            </li>
+           {% endif %}   
+         </ul>
+    </nav>
+
+        <div class="row">
+
+             <form action="{% url 'home:index' %}" method="GET"> 
+                <input type="text" placeholder='tim kiem' name='q'>
+             </form>
+
+             <div class="col-4">
+                   Browser
+                   <br>
+                   <a href="{% url 'home:index' %}">All</a>
+                  {% for topic in topics %}
+                  <br>
+                 <a href="{% url 'home:index' %}?q={{topic.name}}">{{topic}}</a>
+      
+                  {% endfor %}
+             </div>
+          
+              <div class="col-8">
+               {% for room in rooms   %}
+                   
+                  {% if request.user == room.host %}
+                       <span>{{room.id}}</span>
+                       <br>
+                       <a href="{% url 'home:update_room' room.id %}"> Edit</a>
+                       <br>
+                       <a href="{% url 'home:delete_room' room.id %}">delete</a>   
+                       <br>
+                   {% endif %}  
+                      <span>@{{room.host.username}}</span>
+                      <div><a href="{% url 'home:room' room.id  %}">{{room.name}} </a></div>
+                       <small>{{room.topic.name}}</small>
+                       <br>                                      
+                     <br>
+                     <br>
+                 {% endfor %}
+                      
+                    <br>                      
+             </div>
+
+        </div>
+       
+
+     </div>
+</div>
+
+
+  
+{% endblock content %}

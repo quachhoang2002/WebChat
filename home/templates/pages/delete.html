@@ -1,0 +1,13 @@
+{% extends 'pages/page.html' %}
+{% block content %}
+   <form action="" method="POST">
+
+    {% csrf_token %} 
+    <p>Ban muon xoa chu "{{obj}}" ?</p>
+    <a href="{{ request.META.HTTP_REFERER }}"> Tro Lai   </a>
+    <input type="submit" value='confirm'>
+
+   </form>
+ 
+    
+{% endblock content %}
